@@ -1,0 +1,36 @@
+<form action="./create_simple" method="post">
+    {% csrf_token %}
+    <input type="text" name="header" id="">
+    <input type="text" name="description" id="">
+    <input type="submit" value="Добавить">
+</form>
+<script>
+    let body = document.querySelector("body")
+    fetch("./json_simple")
+        .then(response => response.json())
+        .then(data => dataToHtml(data.todos))
+    function dataToHtml(data) {
+        for (let i = 0; i < data.length; i++) {
+            let todo = createTodo(data[i])
+            appendToElement(todo, body)
+        }
+    }
+    function createTodo(obj) {
+          let hello = document.createElement("h1")
+          hello.textContent = obj.header
+          let description = document.createElement("p")
+          description.textContent = obj.description
+          let image = document.createElement("img")
+          let todo = document.createElement("div")
+          image.setAttribute("src", "/media/" + obj.image)
+          let currentDiv = document.getElementById("pagination");
+          todo.append(hello);
+          todo.append(description);
+          todo.append(image);
+          console.log("testing")
+          return todo
+        }
+    function appendToElement(what, to) {
+        to.append(what)
+    }
+</script>
